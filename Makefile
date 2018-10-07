@@ -1,4 +1,4 @@
-.PHONY: all clean dep build build-darwin build-linux
+.PHONY: all clean dep build build-darwin build-linux test test-coverage
 
 VERSION := $(shell git describe --tags --abbrev=0)
 
@@ -29,3 +29,12 @@ clean:
 	rm -rf build
 
 build: build-darwin build-linux
+
+test:
+	go test -cover ./...
+
+test-coverage:
+	$(eval t="${TMPDIR}/corgi-test-coverage.$$.tmp")
+	go test -coverprofile=$(t) ./... && \
+		go tool cover -html=$(t) && \
+		rm $(t)
