@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"os"
 	"testing"
-
-	"github.com/davecgh/go-spew/spew"
 )
 
 var tmpDir string
@@ -124,9 +122,7 @@ func TestGetOrCreatePath(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		path := fmt.Sprintf("%s/%s", tmpDir, tt.loc)
-		err := GetOrCreatePath(path, tt.perm, tt.isDir)
-		spew.Dump(err)
+		err := GetOrCreatePath(tmpDir+"/"+tt.loc, tt.perm, tt.isDir)
 		checkErrors(t, i, tt.err, err)
 	}
 }
